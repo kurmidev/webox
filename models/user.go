@@ -42,3 +42,9 @@ func (u *User) GetUser(username string) (User, error) {
 	err := DB.Table(u.TableName()).Where("username=?", username).Scan(&userdetails).Error
 	return userdetails, err
 }
+
+func (u *User) GetUserByMobile(mobileno string) (User, error) {
+	var userdetails User
+	err := DB.Table(u.TableName()).Where("mobileno=? and operator_type = 4", mobileno).Scan(&userdetails).Error
+	return userdetails, err
+}

@@ -2,13 +2,11 @@ module github.com/kurmidev/webox
 
 go 1.21.4
 
-replace github.com/kurmidev/common => ../common
-
 require (
 	github.com/go-chi/chi/v5 v5.0.12
 	github.com/go-chi/render v1.0.3
 	github.com/golang-jwt/jwt/v5 v5.2.1
-	github.com/kurmidev/common v0.0.0-00010101000000-000000000000
+	github.com/kurmidev/gocomman v0.1.1
 	golang.org/x/crypto v0.12.0
 	gorm.io/gorm v1.25.11
 )

@@ -25,6 +25,8 @@ func Routes(h *handler.Handlers) *chi.Mux {
 	r.Route("/api/v1", func(r chi.Router) {
 		r.Route("/user", func(r chi.Router) {
 			r.Post("/login", h.Login)
+			r.Post("/send-login-otp", h.SendOtp)
+			r.Post("/login-otp", h.LoginOtp)
 		})
 
 		r.Get("/bouque/list", h.BouqueList)
@@ -35,6 +37,7 @@ func Routes(h *handler.Handlers) *chi.Mux {
 				r.Get("/profile/{id}", h.GetProfile)
 				// r.Get("/me/", h.MeDetails)
 				r.Get("/smc-details/{number}/{type}", h.SmcDetails)
+				r.Get("/transaction/{id}", h.ToTransactionResponse)
 			})
 			//r.Use(AuthMiddleware) // Use the authentication middleware
 

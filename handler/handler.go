@@ -1,11 +1,11 @@
 package handler
 
 import (
-	"github.com/kurmidev/common"
+	gocommon "github.com/kurmidev/gocomman"
 	"github.com/kurmidev/webox/models"
 )
 
 type Handlers struct {
-	Common *common.Common
+	Common *gocommon.Common
 	Models *models.Models
 }

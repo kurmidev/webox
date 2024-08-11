@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/kurmidev/common"
+	gocommon "github.com/kurmidev/gocomman"
 	"github.com/kurmidev/webox/handler"
 	"github.com/kurmidev/webox/models"
 	"github.com/kurmidev/webox/router"
@@ -28,7 +28,7 @@ func InitApplication() *handler.Handlers {
 		log.Fatal(err)
 	}
 
-	c := &common.Common{}
+	c := &gocommon.Common{}
 	err = c.New(path)
 	if err != nil {
 		log.Fatal(err)

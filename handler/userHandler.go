@@ -33,6 +33,10 @@ type LoginResponse struct {
 	Expiry      string `json:"expiry"`
 }
 
+type LoginOtpRequest struct {
+	MobileNo string `json:"mobile_no"`
+}
+
 func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 	var logindata LoginRequest
 	var payload LoginResponse
@@ -93,28 +97,45 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 
 }
 
-/*func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
+func (h *Handlers) SendOtp(w http.ResponseWriter, r *http.Request) {
+	var logindata LoginOtpRequest
+
+	err := json.NewDecoder(r.Body).Decode(&logindata)
+	if err != nil {
+		message := map[string]string{"request": "Invalid request format."}
+		_ = h.Common.WriteJSON(w, http.StatusBadRequest, message)
+		return
+	}
+
+	user,err;= h.Models.GetUserByMobile(lologindata.MobileNo)
+	if err!= nil {
+        message := map[string]string{"mobile_no": "Invalid mobile number details provided."}
+        h.Common.WriteJSON(w, http.StatusBadRequest, message)
+        return
+    }
+}
+
+func (h *Handlers) LoginOtp(w http.ResponseWriter, r *http.Request) {
 	var logindata LoginRequest
 	var payload LoginResponse
 	err := json.NewDecoder(r.Body).Decode(&logindata)
 	if err != nil {
 		message := map[string]string{"request": "Invalid request format."}
-		_ = h.App.WriteJSON(w, http.StatusBadRequest, message)
+		_ = h.Common.WriteJSON(w, http.StatusBadRequest, message)
 		return
 	}
-	var user data.User
-	err = h.App.DB.Collection("user").Find(db.Cond{"username": logindata.LoginForm.Username}).One(&user)
+
+	user, err := h.Models.User.GetUser(logindata.Username)
 	if err != nil {
-		//http.Error(w, err.Error(), http.StatusBadRequest)
 		message := map[string]string{"username": "Invalid username details provided."}
-		_ = h.App.WriteJSON(w, http.StatusBadRequest, message)
+		h.Common.WriteJSON(w, http.StatusBadRequest, message)
 		return
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(logindata.LoginForm.Password))
 	if err != nil {
 		message := map[string]string{"password": "Invalid password details provided."}
-		_ = h.App.WriteJSON(w, http.StatusBadRequest, message)
+		h.Common.WriteJSON(w, http.StatusBadRequest, message)
 		return
 	}
 
@@ -150,6 +171,5 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 	payload.Name = user.Name
 	payload.Role = user.Role
 	payload.Expiry = time.Now().Add(100000 * time.Minute).Format("2006-01-02 15:04:05")
-	_ = h.App.WriteJSON(w, http.StatusOK, payload)
+	h.Common.WriteJSON(w, http.StatusOK, payload)
 }
-*/

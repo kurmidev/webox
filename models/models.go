@@ -24,6 +24,7 @@ type Models struct {
 	Broadcaster
 	Genre
 	Language
+	Transaction
 }
 
 func New(databasePool *gorm.DB) *Models {
@@ -46,6 +47,7 @@ func New(databasePool *gorm.DB) *Models {
 		Broadcaster:      Broadcaster{},
 		Genre:            Genre{},
 		Language:         Language{},
+		Transaction:      Transaction{},
 	}
 
 }
